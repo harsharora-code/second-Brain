@@ -1,10 +1,10 @@
 import express from "express"
 import mongoose from "mongoose"
 import jwt from 'jsonwebtoken'
-import { random } from "./utils.js";
 import {JWT_SECRET} from "./config.js"; 
 import { contentModel, linkModel, userModel } from "./db.js";
 import { userMiddleware } from "./middleware.js";
+import {randomBytes} from 'crypto'
 const app = express();
 app.use(express.json());
 
@@ -68,7 +68,7 @@ app.post('/api/v1/content', userMiddleware, async function(req, res) {
         type,
         title,
         tags,
-        userId: req.userId,
+        userDetails: req.userId,
     
 
     })
@@ -77,10 +77,10 @@ app.post('/api/v1/content', userMiddleware, async function(req, res) {
     })
 })
 app.get("/api/v1/content", userMiddleware, async function(req, res) {
-    const userId = req.userId;
+    const userDetails = req.userId;
      const content = await contentModel.find({
-        userId: userId,
-    }).populate("userId", "username")
+        userDetails: userDetails,
+    }).populate("userDetails", "username")
     res.json({
         content
     })
@@ -111,7 +111,7 @@ app.post("/api/v1/brain/share", userMiddleware, async function(req, res) {
             })
             return;
         }
-        const hash = random(10);
+        const hash = randomBytes(10).toString('hex');
         await linkModel.create({
             userId: req.userId,
             hash: hash,
@@ -127,6 +127,40 @@ app.post("/api/v1/brain/share", userMiddleware, async function(req, res) {
             msg : "removed link"
         })
     }
+
+})
+app.get('/api/v1/brain/:sharelink', async function(req, res) {
+    const hash = req.params.sharelink;
+    const link = await linkModel.findOne({
+        hash,
+    })
+    if(!link) {
+        res.status(404).json({
+            msg: "link is invalid"
+        })
+        return;
+    }
+    // match with our content id
+    const content = await contentModel.find({
+        userDetails: link.userId
+    })
+    // match with user id
+    const user  = await userModel.findOne({
+        _id: link.userId
+    })
+
+    if(!user) {
+        res.status(403).json({
+            msg : "you cannot access the link"
+        })
+        return
+    }
+
+    res.json({
+        username : user.username,
+        content: content
+    })
+
 
 })
 app.listen(3000)

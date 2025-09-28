@@ -3,6 +3,7 @@ dotenv.config();
 import mongoose from "mongoose";
 import {model, Schema} from 'mongoose'
 import {MongoUrl} from "./config.js";
+import type { userInfo } from "os";
 
 mongoose.connect(MongoUrl!);
  
@@ -24,7 +25,7 @@ const contentSchema = new Schema({
         }
     ],
     type : {type: String, enum: contentTypes, required: true},
-    userId : {type: mongoose.Types.ObjectId,ref: "User", required: true}
+    userDetails : {type: mongoose.Types.ObjectId, ref: "User", required: true}
 
 
 })
