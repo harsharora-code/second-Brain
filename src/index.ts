@@ -1,7 +1,8 @@
 import express from "express"
 import mongoose from "mongoose"
 import jwt from 'jsonwebtoken'
-const JWT_SECRET = "a5sasery";
+
+import {JWT_SECRET} from "./config.js"; 
 import { contentModel, linkModel, userModel } from "./db.js";
 import { userMiddleware } from "./middleware.js";
 const app = express();
@@ -38,7 +39,7 @@ app.post('/api/v1/signin', async function(req, res) {
     if(existingUser) {
      const token = jwt.sign({
         id: existingUser._id,
-    }, JWT_SECRET)
+    }, JWT_SECRET as string)
      res.json({
         message: "user signin done",
         token: token
@@ -50,6 +51,15 @@ app.post('/api/v1/signin', async function(req, res) {
     }
 })
 app.post('/api/v1/content', userMiddleware, async function(req, res) {
+    let tags : string[] = [];
+    if(req.body.tags) {
+        if(typeof req.body.tags === "string") {
+            tags = req.body.tags.split(',').map((tag: string) => tag.trim());
+        }  else {
+            tags = req.body.tags;
+        }
+    }
+
     const title = req.body.title;
     const link  = req.body.link;
     const type = req.body.type;
@@ -57,15 +67,16 @@ app.post('/api/v1/content', userMiddleware, async function(req, res) {
         link,
         type,
         title,
+        tags,
         userId: req.userId,
-        tags: []
+    
 
     })
     res.json({
         msg : "content-added done"
     })
 })
-app.get("api/v1/content", userMiddleware, async function(req, res) {
+app.get("/api/v1/content", userMiddleware, async function(req, res) {
     const userId = req.userId;
      const content = await contentModel.find({
         userId: userId,

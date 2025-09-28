@@ -11,11 +11,18 @@ const userSchema = new Schema({
     password: String,
 
 })
-const contentTypes = ['images | video | audio | articles']
+const contentTypes = ['images', 'tweet', 'video', 'audio', 'link', 'article', 'document'];
+ export const Tags =  ["productivity", "politics","jobs", "computer-science", "software-developer"]
 const contentSchema = new Schema({
     title: {type: String, unique: true},
     link : {type: String, unique: true},
-    tags:  {type: mongoose.Types.ObjectId, ref: "Tags"},
+    tags: [
+        {
+         type :String,
+         enum : Tags,
+        required: true
+        }
+    ],
     type : {type: String, enum: contentTypes, required: true},
     userId : {type: mongoose.Types.ObjectId,ref: "User", required: true}
 

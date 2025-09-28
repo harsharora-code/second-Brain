@@ -13,6 +13,7 @@ declare module "express-serve-static-core" {
 
 export function userMiddleware(req: Request, res: Response, next: NextFunction) {
     const token = req.headers["authorization"];
+    const verifyToken = token?.split(' ')[1];
     const decodedUser = jwt.verify(token as string, JWT_SECRET);
     if(decodedUser) {
         if(typeof decodedUser === "string") {
