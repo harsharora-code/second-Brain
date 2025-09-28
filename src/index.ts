@@ -28,14 +28,13 @@ app.post('/api/v1/signup', async function(req, res) {
 
 })
 
-app.post('api/v1/signin', async function(req, res) {
+app.post('/api/v1/signin', async function(req, res) {
     const username  = req.body.username;
     const password  = req.body.password;
     const existingUser = await userModel.findOne({
         username,
         password
     })
-
     if(existingUser) {
      const token = jwt.sign({
         id: existingUser._id,
@@ -49,8 +48,6 @@ app.post('api/v1/signin', async function(req, res) {
             message: "user not found"
         })
     }
-
-
 })
 app.post('/api/v1/content', userMiddleware, async function(req, res) {
     const title = req.body.title;

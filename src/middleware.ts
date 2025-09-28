@@ -2,7 +2,7 @@ import type {Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken"
 import type { JwtPayload } from "jsonwebtoken";
 const JWT_SECRET = "a5sasery";
-import "express-serve-static-core";
+
 
 declare module "express-serve-static-core" {
   interface Request {
