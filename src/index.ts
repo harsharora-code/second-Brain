@@ -1,7 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import jwt from 'jsonwebtoken'
-
+import { random } from "./utils.js";
 import {JWT_SECRET} from "./config.js"; 
 import { contentModel, linkModel, userModel } from "./db.js";
 import { userMiddleware } from "./middleware.js";
@@ -84,6 +84,49 @@ app.get("/api/v1/content", userMiddleware, async function(req, res) {
     res.json({
         content
     })
+
+})
+app.delete('/api/v1/content', userMiddleware, async function(req, res) {
+  
+    const contentId = req.body.contentId;
+      
+        await contentModel.deleteMany({
+          _id: contentId,
+            userId: req.userId,
+        })
+        res.json({
+            msg : "content deleted"
+        })
+})
+app.post("/api/v1/brain/share", userMiddleware, async function(req, res) {
+    const share = req.body.share;
+    if(share) {
+       const existingLink =  await linkModel.findOne({
+        userId : req.userId,
+
+        });
+        if(existingLink) {
+            res.json({
+                hash: existingLink.hash
+            })
+            return;
+        }
+        const hash = random(10);
+        await linkModel.create({
+            userId: req.userId,
+            hash: hash,
+        })
+        res.json({
+            hash: hash,
+        })
+    } else {
+        await linkModel.deleteOne({
+            userId: req.userId,
+        });
+        res.json({
+            msg : "removed link"
+        })
+    }
 
 })
 app.listen(3000)
