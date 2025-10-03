@@ -1,0 +1,12 @@
+import { ShareBrainDialog } from "./Share-Brain";
+import { ThemeProvider } from "../theme-provider";
+
+export default function ShareBrainDialogExample() {
+  return (
+    <ThemeProvider>
+      <div className="p-8 bg-background min-h-[200px] flex items-center justify-center">
+        <ShareBrainDialog />
+      </div>
+    </ThemeProvider>
+  );
+}
