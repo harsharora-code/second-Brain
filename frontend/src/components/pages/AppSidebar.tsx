@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AppSidebar } from "./Sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "../ui/sidebar";
 import { ThemeProvider } from "./Theme-Provider";
 
 export default function AppSidebarExample() {

@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarHeader,
-} from "@/components/ui/sidebar";
+} from "../ui/sidebar";
 
 type SidebarFilter = "all" | "tweets" | "videos" | "documents" | "links" | "tags";
 

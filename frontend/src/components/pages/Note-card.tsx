@@ -1,7 +1,7 @@
 import { Share2, Trash2, Pencil, Twitter, Video, FileText, Link as LinkIcon } from "lucide-react";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
 import type { Note } from "./Schema";
 import { formatDistanceToNow } from "date-fns";
 

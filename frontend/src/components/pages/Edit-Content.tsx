@@ -18,8 +18,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+} from "../ui/select";
+import { Badge } from "../ui/badge";
 import type { Note } from "./Schema";
 
 interface EditContentDialogProps {

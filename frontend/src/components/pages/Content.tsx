@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "../ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -19,8 +19,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+} from "../ui/select";
+import { Badge } from "../ui/badge";
 import type { InsertNote } from "./Schema";
 
 interface AddContentDialogProps {
@@ -80,7 +80,7 @@ export function AddContentDialog({ onAdd }: AddContentDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button data-testid="button-add-content">
+        <Button   data-testid="button-add-content">
           <Plus className="h-4 w-4 mr-2" />
           Add Content
         </Button>

@@ -3,16 +3,20 @@ import { queryClient } from './lib/queryClient'
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster} from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-// import { ThemeProvider } from "./components/pages/Theme-Provider"
+import { ThemeProvider } from "./components/pages/Theme-Provider"
 import Home from "./components/pages/Home";
 import NotFound from "./components/pages/Not-found";
-import { Theater } from "lucide-react";
+import Check from "./components/pages/Check";
+
+
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path='/test' component={Check}/>
       <Route component={NotFound} />
+  
     </Switch>
   );
 }
@@ -20,12 +24,12 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <ThemeProvider defaultTheme="dark"> */}
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster/>
           <Router />
         </TooltipProvider>
-      {/* </ThemeProvider> */}
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
