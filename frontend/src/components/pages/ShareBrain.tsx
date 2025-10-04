@@ -1,5 +1,5 @@
 import { ShareBrainDialog } from "./Share-Brain";
-import { ThemeProvider } from "../theme-provider";
+import { ThemeProvider } from "./Theme-Provider";
 
 export default function ShareBrainDialogExample() {
   return (

@@ -1,4 +1,4 @@
-import { ThemeProvider } from "../theme-provider";
+import { ThemeProvider } from "./Theme-Provider";
 import { ThemeToggle } from "./Theme-Toggle";
 
 export default function ThemeToggleExample() {

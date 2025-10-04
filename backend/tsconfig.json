@@ -2,8 +2,8 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "backend/src",
-    "outDir": "backend/dist",
+    "rootDir": "./src",
+    "outDir": "./dist",
      "typeRoots": ["backend/src/types", "./node_modules/@types"],
 
     // Environment Settings
