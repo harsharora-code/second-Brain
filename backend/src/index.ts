@@ -5,7 +5,12 @@ import {JWT_SECRET} from "./config.js";
 import { contentModel, linkModel, userModel } from "./db.js";
 import { userMiddleware } from "./middleware.js";
 import {randomBytes} from 'crypto'
+import cors from "cors"
 const app = express();
+app.use(cors({
+    origin: "http://localhost:5173",
+
+}));
 app.use(express.json());
 
 app.post('/api/v1/signup', async function(req, res) {

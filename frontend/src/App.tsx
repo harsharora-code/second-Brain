@@ -7,12 +7,14 @@ import { ThemeProvider } from "./components/pages/Theme-Provider"
 import Home from "./components/pages/Home";
 import NotFound from "./components/pages/Not-found";
 import Check from "./components/pages/Check";
+import { Signup } from "./components/pages/Signup";
 
 
 
 function Router() {
   return (
     <Switch>
+      <Route path='/signup' component={Signup}/>
       <Route path="/" component={Home} />
       <Route path='/test' component={Check}/>
       <Route component={NotFound} />
