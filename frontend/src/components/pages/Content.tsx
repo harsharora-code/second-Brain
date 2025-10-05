@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
+import { backendUrl } from "./Config";
+
 import {
   Dialog,
   DialogContent,

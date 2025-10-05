@@ -11,29 +11,46 @@ import {
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { backendUrl } from "./Config";
+import axios from "axios";
 
 export function ShareBrainDialog() {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const shareUrl = `${window.location.origin}/shared/${Math.random().toString(36).substring(7)}`;
+  const [shareLink, setshareLink] = useState("");
+  
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      await navigator.clipboard.writeText(shareLink);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy:", err);
     }
-  };
+  }; 
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" data-testid="button-share-brain">
+        <Button variant="outline" data-testid="button-share-brain"
+        onClick={ async () => {
+             const response  =  await axios.post(`${backendUrl}api/v1/brain/share`, {
+                share : true
+              }, {
+                headers : {
+                  "Authorization" :    `Bearer ${localStorage.getItem("token")}`
+                }
+              });
+              const link = `http://localhost:5173/share/${response.data.hash}`;
+              setshareLink(link);
+
+        }}
+        >
           <Share2 className="h-4 w-4 mr-2" />
           Share Brain
-        </Button>
+        </Button> 
       </DialogTrigger>
       <DialogContent data-testid="dialog-share-brain">
         <DialogHeader>
@@ -49,7 +66,7 @@ export function ShareBrainDialog() {
             <div className="flex gap-2">
               <Input
                 id="share-url"
-                value={shareUrl}
+                value={shareLink}
                 readOnly
                 className="font-mono text-sm"
                 data-testid="input-share-url"
